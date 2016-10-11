@@ -2,7 +2,7 @@
 <head>
 
 
-<title>Motor Driver </title>
+<title>T1a08-Motor-Driver-Kaiya </title>
 
 <font style="font-size:30px">
 
@@ -193,13 +193,19 @@ Get this from the settings area when logged into <a href="http://particle.io/bui
 
 
 
-<input type="button" value="d0-read" onClick="{
-    sendToSpark('d0-read')
+<input type="button" value="Counter Clockwise" onClick="{
+    sendToSpark('d0-send-0')
 }">
 
 
 
-
+<input type="button" value="Clockwise" onClick="{
+    sendToSpark('d0-send-1')
+}">
+   
+   
+   
+   
 <input type="button" value="a1-read" onClick="{
     sendToSpark('a1-read')
 }"><br>
