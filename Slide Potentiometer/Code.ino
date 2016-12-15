@@ -2,9 +2,7 @@
 int ledPin = D1;
 
 // Our button wired to D0
-// We wire D0 to the middle terminal on the switch
-// And any of the two other terminals to ground
-int switchPin = D0;
+int buttonPin = D0;
 
 // Define a pin that we'll place the pot on
 int slidePin = A0;
@@ -25,11 +23,12 @@ void setup()  {
   Particle.variable("slide", &slideReading, INT);
   
   // For input, we define the
-  // switch as an input-pullup
+  // pushbutton as an input-pullup
   // this uses an internal pullup resistor
   // to manage consistent reads from the device
 
-  pinMode( switchPin , INPUT_PULLUP); // sets pin as input
+
+  pinMode( buttonPin , INPUT_PULLUP); // sets pin as input
 
   // We also want to use the LED
 
@@ -53,13 +52,18 @@ void loop() {
   // wait 1/10th of a second and then loop
   delay(100);
 
-   // find out if the button is pushed
-   // or not by reading from it.
-   int buttonState = digitalRead( switchPin );
+  // find out if the button is pushed
+  // or not by reading from it.
+   int buttonState = digitalRead( buttonPin );
 
-  // Using a pulldown resistor we get a LOW
-  // Signal when its on
-  
+  // remember that we have wired the pushbutton to
+  // ground and are using a pulldown resistor
+  // that means, when the button is pushed,
+  // we will get a LOW signal
+  // when the button is not pushed we'll get a HIGH
+
+  // let's use that to set our LED on or off
+
   if( buttonState == LOW )
   {
     // turn the LED On
