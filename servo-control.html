@@ -17,8 +17,8 @@
     function showValue(newValue) {
       document.getElementById("range").innerHTML=newValue;
       var request = new XMLHttpRequest();
-      var dev_id = '<1d0022000847353138383138>';
-      var access = '<32fd401b15e99a0cfdf62d68198bba925bb6ae41>';
+      var dev_id = '<2b0039001747343338333633>';
+      var access = '<04d5b1e2c5d91c88914a72d2843e4ffad0faf090>';
       var data = 'params='+newValue+'&access_token='+access;
       var url = 'https://api.particle.io/v1/devices/'+dev_id+'/setpos/';
       request.open('POST', url, true);
