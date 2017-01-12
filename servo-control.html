@@ -1,30 +1,56 @@
 <html>
-  <head>
-    <style>
-    body {
-      margin: 1em auto;
-      max-width: 45em;
-      padding: 0.8em;
-      background: white;
-    }
-    </style>
-  </head>
-  <body>
-    <h1>Photon servo control</h1>
-    <input type="range" min="0" max="180" value="0" onchange="showValue(this.value)"/>
-    <span id="range">0</span>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<body>
+    <P>Set Servo Position:<br><br>
+    <input type="range" name="degBox" id="degBoxId" min="0" max="180" step="1" value="90" list="myData" onchange="setValue(this)">
+    <!-- This adds the tick marks to the range but does not in Safari -->
+    <datalist id="myData">
+       <option value="0">
+       <option value="30">
+       <option value="60">
+       <option value="90">
+       <option value="120">
+       <option value="150">
+       <option value="180">
+    </datalist>
+    <br><br>
+    <button id="minusbutton" onclick="fineAdjust(-5)">&lArr; -5 &deg;</button>
+    <button id="plusbutton"  onclick="fineAdjust(+5)">+5 &deg; &rArr;</button>
+    <br><br>
+    <P>Current Position: <span id="curPos"></span><br>
+
     <script type="text/javascript">
-    function showValue(newValue) {
-      document.getElementById("range").innerHTML=newValue;
-      var request = new XMLHttpRequest();
-      var dev_id = '<2b0039001747343338333633>';
-      var access = '<04d5b1e2c5d91c88914a72d2843e4ffad0faf090>';
-      var data = 'params='+newValue+'&access_token='+access;
-      var url = 'https://api.particle.io/v1/devices/'+dev_id+'/setpos/';
-      request.open('POST', url, true);
-      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-      request.send(data);
-    }
+      var deviceID    = "<< 2b0039001747343338333633 >>";
+      var accessToken = "<< 04d5b1e2c5d91c88914a72d2843e4ffad0faf090 >>";
+      var setFunc = "setpos";
+      var getFunc = "getpos";
+
+      window.setInterval(function() {
+        requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/" + getFunc + "/?access_token=" + accessToken;
+        $.getJSON(requestURL, function(json) {
+                 document.getElementById("curPos").innerHTML = json.result + "&deg;";
+                 document.getElementById("curPos").style.fontSize = "28px";
+                 document.getElementById("degBoxId").value = parseInt(json.result);
+                 });
+      }, 1000);
+
+      function setValue(obj) {
+        var newValue = document.getElementById('degBoxId').value;
+        sparkSetPos(newValue);
+      }
+      
+      function fineAdjust(value) {
+        var currentValue = parseInt(document.getElementById('curPos').innerHTML);
+        var setValue = value + currentValue;
+        sparkSetPos(setValue);
+        document.getElementById("degBoxId").value = setValue;
+      }
+
+      function particleSetPos(newValue) {
+	var requestURL = "https://api.spark.io/v1/devices/" +deviceID + "/" + setFunc + "/";
+        $.post( requestURL, { params: newValue, access_token: accessToken });
+      }
+
     </script>
-  </body>
+</body>
 </html>
