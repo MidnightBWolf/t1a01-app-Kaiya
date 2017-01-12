@@ -10,7 +10,7 @@
     </style>
   </head>
   <body>
-    <h1>Photon servo control Final Backup Kaiya</h1>
+    <h1>Photon servo control</h1>
     <input type="range" min="0" max="180" value="0" onchange="showValue(this.value)"/>
     <span id="range">0</span>
     <script type="text/javascript">
@@ -19,8 +19,8 @@
       var request = new XMLHttpRequest();
       var dev_id = '<2b0039001747343338333633>';
       var access = '<04d5b1e2c5d91c88914a72d2843e4ffad0faf090>';
-      var data = 'params='+newValue+'04d5b1e2c5d91c88914a72d2843e4ffad0faf090='+access;
-      var url = 'https://build.particle.io/build/586fd0ab893e36613900101b';
+      var data = 'params='+newValue+'&access_token='+access;
+      var url = 'https://api.particle.io/v1/devices/'+dev_id+'/setpos/';
       request.open('POST', url, true);
       request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
       request.send(data);
