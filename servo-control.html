@@ -20,8 +20,8 @@
     <P>Current Position: <span id="curPos"></span><br>
 
     <script type="text/javascript">
-      var deviceID    = "<< 2b0039001747343338333633 >>";
-      var accessToken = "<< 04d5b1e2c5d91c88914a72d2843e4ffad0faf090 >>";
+      var deviceID    = "2b0039001747343338333633";
+      var accessToken = "04d5b1e2c5d91c88914a72d2843e4ffad0faf090";
       var setFunc = "setpos";
       var getFunc = "getpos";
 
@@ -36,13 +36,13 @@
 
       function setValue(obj) {
         var newValue = document.getElementById('degBoxId').value;
-        sparkSetPos(newValue);
+        particleSetPos(newValue);
       }
       
       function fineAdjust(value) {
         var currentValue = parseInt(document.getElementById('curPos').innerHTML);
         var setValue = value + currentValue;
-        sparkSetPos(setValue);
+        particleSetPos(setValue);
         document.getElementById("degBoxId").value = setValue;
       }
 
